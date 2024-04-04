@@ -1,3 +1,4 @@
+import inspect
 import serial
 import serial.tools.list_ports
 from google.protobuf.internal.encoder import _VarintBytes
@@ -122,15 +123,20 @@ class FlipperBridge:
         cmd_data.path = path
         rep_data = self._rpc_send_and_read_answer(cmd_data, "storage_list_request")
 
-        storage_response.extend(
-            MessageToDict(message=rep_data.storage_list_response, including_default_value_fields=True, )["file"])
+        storage_response.extend(self._message_to_dict(rep_data.storage_list_response)["file"])
 
         while rep_data.has_next:
             rep_data = self._rpc_read_answer()
-            storage_response.extend(
-                MessageToDict(message=rep_data.storage_list_response, including_default_value_fields=True, )["file"])
+            storage_response.extend(self._message_to_dict(rep_data.storage_list_response)["file"])
 
         return storage_response
+
+    @staticmethod
+    def _message_to_dict(message):
+        if 'including_default_value_fields' in inspect.signature(MessageToDict).parameters:
+            return MessageToDict(message=message, including_default_value_fields=True)
+        else:
+            return MessageToDict(message=message, always_print_fields_with_no_presence=True)
 
     def file_read(self, path=None):
         storage_response = []
@@ -182,7 +188,7 @@ class FlipperBridge:
         cmd_data = storage_pb2.MkdirRequest()
         cmd_data.path = path
 
-        rep_data = self._rpc_send_and_read_answer(cmd_data, "storage_mkdir_request")
+        self._rpc_send_and_read_answer(cmd_data, "storage_mkdir_request")
 
     def file_rename(self, old, new):
         cmd_data = storage_pb2.RenameRequest()
