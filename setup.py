@@ -11,6 +11,13 @@ if os.name == "nt":
     include_dirs = ["build\\pthreads", "build\\lzma"]
     extra_compile_args = ["-DNEED_FTIME"]
     libraries.extend(["pthreadVC2", "Ws2_32"])
+elif sys.platform == "darwin":
+    # 获取 Homebrew 前缀
+    homebrew_prefix = os.popen('brew --prefix').read().strip()
+    include_dirs.append(os.path.join(homebrew_prefix, 'include'))
+    library_dirs.append(os.path.join(homebrew_prefix, 'lib'))
+    extra_compile_args.append('-I' + os.path.join(homebrew_prefix, 'include'))
+    extra_link_args.append('-L' + os.path.join(homebrew_prefix, 'lib'))
 
 nested_solver = Extension("nested",
                           sources=["NestedSolver/python.c", "NestedSolver/crapto1.c", "NestedSolver/library.c",
