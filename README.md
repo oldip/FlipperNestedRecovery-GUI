@@ -63,6 +63,6 @@ Special thanks to the following individuals and projects for their support and c
 
 Special thanks to all users who provided feedback and suggestions during the development of the project. Your support is our motivation for continuous improvement.
 
-### Disclaimer
+## Disclaimer
 
 This software may contain defects or errors, and the author makes no express or implied warranties regarding the performance or effects of this software, including but not limited to merchantability, fitness for a particular purpose, and non-infringement. The author shall not be liable for any damages, losses, or other liabilities arising from the use or inability to use this software, whether in contract, tort, or other legal actions.
