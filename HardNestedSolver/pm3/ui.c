@@ -32,7 +32,7 @@
 
 #include "util.h"
 
-#ifdef _WIN32
+#if defined(_WIN32) || defined(_WIN64)
 # include <direct.h>    // _mkdir
 #endif
 
@@ -45,9 +45,9 @@ session_arg_t g_session;
 static bool flushAfterWrite = true;
 static void fPrintAndLog(FILE *stream, const char *fmt, ...);
 
-#ifdef _WIN32
+#if defined(_WIN32) || defined(_WIN64)
 #define MKDIR_CHK _mkdir(path)
-#define STRTOK strtok
+#define STRTOK strtok_s
 #else
 #define MKDIR_CHK mkdir(path, 0700)
 #define STRTOK strtok_r
