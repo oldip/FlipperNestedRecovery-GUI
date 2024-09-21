@@ -30,7 +30,7 @@ hardnested_solver = Extension("hardnested", sources=["HardNestedSolver/pm3/ui.c"
                                                      "HardNestedSolver/python.c"], include_dirs=include_dirs,
                               library_dirs=include_dirs, extra_compile_args=extra_compile_args, libraries=libraries)
 
-with open("README.md", "r") as fh:
+with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(name="FlipperNested", version="2.3.5", author="AloneLiberty",
