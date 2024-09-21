@@ -275,21 +275,6 @@ def run_flippernested(uid, port, show_progress, save_nonces, preserve_nonces, fi
 
     cmd = " ".join(cmd)
 
-    # def read_process_output(process):
-    #     while True:
-    #         output = process.stdout.readline()
-    #         if output == "" and process.poll() is not None:
-    #             break
-    #         if output:
-    #             append_to_output(output)
-                
-    #             # 检测到提示选择的情况
-    #             if "[-] Custom [..any other value..]" in output:
-    #                 process.stdin.write("3\n")
-    #                 process.stdin.flush()
-    #                 append_to_output(f"{lang['auto_selected']} 3\n")
-    #                 output_text.see(tk.END)
-
     def read_process_output(process):
         while True:
             lang = translations[current_language]
@@ -324,17 +309,8 @@ def run_flippernested(uid, port, show_progress, save_nonces, preserve_nonces, fi
                 elif "Key recovery:" in output and "Found " in output:
                     # 使用第一个")"分割输出内容
                     parts = output.split(")", 1)
-                    # recovery_part = parts[0] + ")"  # 包括右括号
                     found_part = parts[1]
                     
-                    # recovery_part = recovery_part.replace("Key recovery", lang['output_key_recovery'])
-
-                    # 处理Key recovery部分，替换最后一行
-                    # output_text.config(state=tk.NORMAL)
-                    # output_text.delete("end-2l", "end-1l")  # 删除最后一行
-                    # output_text.insert(tk.END, recovery_part + "\n")  # 插入新的进度条内容
-                    # output_text.config(state=tk.DISABLED)
-
                     # 翻译找到密钥的部分
                     match = re.match(r"Found (\d+) key\(s\): (\[.*\])", found_part)
                     if match:
@@ -344,7 +320,6 @@ def run_flippernested(uid, port, show_progress, save_nonces, preserve_nonces, fi
                         output_text.delete("end-2l", "end-1l")  # 删除最后一行
                         output_text.insert(tk.END, translated_recovery)  # 插入新的进度条内容
                         output_text.config(state=tk.DISABLED)
-                        # append_to_output(translated_recovery)
                     continue
 
                 # 如果是"Key recovery:"，则替换最后一行
@@ -386,7 +361,6 @@ def run_flippernested(uid, port, show_progress, save_nonces, preserve_nonces, fi
                 elif "[3] Full: +-100 values" in output:
                     output = lang['output_option_full'] + "\n"
                 elif "[-] Custom [..any other value..]" in output:
-                    # output = lang['output_option_custom'] + "\n"
                     append_to_output(lang['output_option_custom'] + "\n")
                     # 检测到提示选择的情况，自动选择 "3"
                     process.stdin.write("3\n")
@@ -396,8 +370,6 @@ def run_flippernested(uid, port, show_progress, save_nonces, preserve_nonces, fi
 
                 elif "[!] Failed to find keys for this sector" in output:
                     output = lang['output_failed_find_keys'] + "\n"
-                # elif "[1-3/custom] >" in output:
-                #     output = lang['output_prompt'] + "\n"
                 
                 append_to_output(output)
 
@@ -416,17 +388,6 @@ def run_flippernested(uid, port, show_progress, save_nonces, preserve_nonces, fi
         # 启动子线程
         thread = threading.Thread(target=read_process_output, args=(process,))
         thread.start()
-
-        # # 在主线程中每隔10秒更新一次状态
-        # def periodic_update():
-        #     if thread.is_alive():
-        #         lang = translations[current_language]
-        #         append_to_output(f"{lang['command_running']}\n")
-        #         output_text.see(tk.END)
-        #         root.after(10000, periodic_update)
-
-
-        # periodic_update()
 
         # 等待子线程完成
         thread.join()
@@ -645,6 +606,5 @@ update_labels()  # 初始化标签
 
 # 添加窗口关闭事件
 root.protocol("WM_DELETE_WINDOW", on_closing)
-
 
 root.mainloop()
