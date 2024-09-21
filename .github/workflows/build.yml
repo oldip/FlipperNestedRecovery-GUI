@@ -1,4 +1,4 @@
-name: Build and upload to PyPI
+name: Build
 
 on: [push, pull_request]
 
@@ -54,8 +54,25 @@ jobs:
           CIBW_TEST_SKIP: "*-*linux_aarch64 *-macosx_arm64"
           CIBW_BEFORE_BUILD_WINDOWS: "pip install delvewheel"
           CIBW_REPAIR_WHEEL_COMMAND_WINDOWS: "delvewheel repair --add-path build\\pthreads;build\\lzma -w {dest_dir} {wheel}"
-          CIBW_BEFORE_ALL_LINUX: "yum install -y xz xz-devel || apk add xz-dev"
+          # CIBW_BEFORE_ALL_LINUX: "yum install -y xz xz-devel || apk add xz-dev"
           CIBW_BUILD: "cp38-* cp39-* cp310-* cp311-* cp312-*"
+          # Use manylinux_2_28 image
+          CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_28
+          CIBW_MANYLINUX_AARCH64_IMAGE: manylinux_2_28
+          # Robust package installation
+          CIBW_BEFORE_ALL_LINUX: |
+            if command -v dnf; then \
+              dnf install -y xz xz-devel; \
+            elif command -v yum; then \
+              yum install -y xz xz-devel; \
+            elif command -v apt-get; then \
+              apt-get update && apt-get install -y xz-utils liblzma-dev; \
+            elif command -v apk; then \
+              apk add xz-dev; \
+            else \
+              echo "No known package manager found"; \
+              exit 1; \
+            fi
 
       - uses: actions/upload-artifact@v3
         with:
