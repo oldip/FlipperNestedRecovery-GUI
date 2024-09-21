@@ -4,7 +4,9 @@ import sys
 import setuptools
 
 include_dirs = []
+library_dirs = []
 extra_compile_args = []
+extra_link_args = []
 libraries = ["lzma"]
 
 if os.name == "nt":
