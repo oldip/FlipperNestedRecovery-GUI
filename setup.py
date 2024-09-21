@@ -11,7 +11,7 @@ libraries = ["lzma"]
 
 if os.name == "nt":
     include_dirs = ["build\\pthreads", "build\\lzma"]
-    extra_compile_args = ["-DNEED_FTIME"]
+    extra_compile_args = ["/D_CRT_SECURE_NO_WARNINGS", "-DNEED_FTIME"]
     libraries.extend(["pthreadVC2", "Ws2_32"])
 elif sys.platform == "darwin":
     # 获取 Homebrew 前缀
