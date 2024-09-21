@@ -1,6 +1,6 @@
 import os
 from distutils.core import Extension
-
+import sys
 import setuptools
 
 include_dirs = []
@@ -40,7 +40,7 @@ hardnested_solver = Extension("hardnested", sources=["HardNestedSolver/pm3/ui.c"
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
-setuptools.setup(name="FlipperNested", version="2.3.5", author="AloneLiberty",
+setuptools.setup(name="FlipperNested", version="2.3.5", author="AloneLiberty", maintainer="oldip",
                  description="Recover keys from collected nonces", long_description=long_description,
                  long_description_content_type="text/markdown",
                  url="https://github.com/AloneLiberty/FlipperNestedRecovery",
