@@ -42,7 +42,7 @@
 
 session_arg_t g_session;
 
-static bool flushAfterWrite = false;
+static bool flushAfterWrite = true;
 static void fPrintAndLog(FILE *stream, const char *fmt, ...);
 
 #ifdef _WIN32

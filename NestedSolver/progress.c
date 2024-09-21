@@ -20,11 +20,13 @@ void print_progress(uint32_t count, uint32_t max) {
 #ifdef _WIN32
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-    terminal_width = csbi.dwSize.X;
+    // terminal_width = csbi.dwSize.X;
+    terminal_width = 100;
 #else
     struct winsize w;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
-    terminal_width = w.ws_col;
+    // terminal_width = w.ws_col;
+    terminal_width = 100;
 #endif
 
     if (terminal_width < prefix_length + suffix_length + 8) {
