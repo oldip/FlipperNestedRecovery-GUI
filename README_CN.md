@@ -28,7 +28,7 @@ FlipperNestedRecovery GUI 是一个用于执行 FlipperNestedRecovery 工具的�
 ### 1. 下载与安装
 
 1. 下载最新版本的 FlipperNestedRecovery GUI 2.0。
-2. 双击 `FlipperNestedRecovery GUI 2.0.exe` 运行程序。
+2. 双击 `FlipperNestedRecovery GUI 2.0.exe` 或者 `FlipperNestedRecovery GUI 2.0.app` 运行程序。
 3. 没啦，还想要多复杂？
 
 ### 2. 界面介绍

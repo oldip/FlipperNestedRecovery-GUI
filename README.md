@@ -28,7 +28,7 @@ FlipperNestedRecovery GUI is a graphical user interface (GUI) for executing the 
 ### 1. Download and Install
 
 1. Download the latest version of FlipperNestedRecovery GUI 2.0.
-2. Double-click `FlipperNestedRecovery GUI 2.0.exe` to run the program.
+2. Double-click `FlipperNestedRecovery GUI 2.0.exe` or `FlipperNestedRecovery GUI 2.0.app` to run the program.
 3. That's it! No complex steps.
 
 ### 2. Interface Introduction
